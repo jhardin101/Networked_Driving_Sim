@@ -30,7 +30,8 @@ public class PlayerController : NetworkBehaviour
 
             // Set up camera
             GameObject mainCam = GameObject.FindWithTag("MainCamera");
-            mainCam.GetComponent<FollowPlayer>().player = transform;
+            cameraScript = mainCam.GetComponent<FollowPlayer>();
+            cameraScript.player = transform;
 
             // Assign random offset per player
             int clientID = NetworkManager.ClientManager.Clients.Count;
