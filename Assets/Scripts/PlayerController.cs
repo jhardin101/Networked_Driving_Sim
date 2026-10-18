@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using FishNet.Object;
 
+
 public class PlayerController : NetworkBehaviour
 {
     // Link to camera
@@ -20,6 +21,25 @@ public class PlayerController : NetworkBehaviour
 
     // Movement States
     private bool isMoving;
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if (IsOwner)
+        {
+
+            // Set up camera
+            GameObject mainCam = GameObject.FindWithTag("MainCamera");
+            mainCam.GetComponent<FollowPlayer>().player = transform;
+
+            // Assign random offset per player
+            int clientID = NetworkManager.ClientManager.Clients.Count;
+            float xOffset = -20f + clientID * 10.0f;
+            Debug.Log(" client ID is " + clientID.ToString());
+
+            transform.Translate(new Vector3(xOffset, 0, 0));
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
