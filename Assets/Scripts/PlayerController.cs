@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FishNet.Object;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     // Link to camera
     public FollowPlayer cameraScript;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!base.IsOwner) return;
         // Read 2D vector from MoveAction
         moveInput = MoveAction.ReadValue<Vector2>();
 
